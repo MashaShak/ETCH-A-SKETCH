@@ -1,14 +1,13 @@
-let n = 16;
+let n = 30;
 const board = document.querySelector("#board");
 const btnNew = document.querySelector("#new");
 const btnClear = document.querySelector("#clear");
 
+let boardSize;
 
-const widthBox = window.width;
-const heightBox = window.height;
-let boardSize = 480;
 
 //draw the initial grid
+window.onload = setBoardSize();
 window.onload = drawGrid(n);
 //clear the grid
 btnClear.addEventListener("click", () => clearGrid());
@@ -17,8 +16,18 @@ btnNew.addEventListener("click", () => enterSize());
 
 
 
-
-//choose color
+function setBoardSize() {
+    let windowHeight = window.innerHeight;
+    let windowWidth = window.innerWidth;
+    console.log(windowHeight);
+    console.log(windowWidth);
+    if (windowHeight < windowWidth) {
+        boardSize = windowHeight - 200;
+    } else boardSize = windowWidth - 200;
+    console.log(boardSize);
+    board.style.height = `${boardSize}px`;
+    board.style.width = `${boardSize}px`;
+}
 
 function enterSize() {
     const newSize = prompt("Choose the size","2...64");
@@ -33,8 +42,6 @@ function enterSize() {
         drawGrid(n);
     }
 }
-
-
 
 function drawGrid (n) {
     let gridSize = boardSize/n - 2;

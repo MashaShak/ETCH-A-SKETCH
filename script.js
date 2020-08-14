@@ -1,10 +1,11 @@
-let n = 30;
+let n = 16;
 const board = document.querySelector("#board");
 const btnNew = document.querySelector("#new");
 const btnClear = document.querySelector("#clear");
+const btnBW = document.querySelector("#bw");
+const btnColor = document.querySelector("#color");
 
 let boardSize;
-
 
 //draw the initial grid
 window.onload = setBoardSize();
@@ -14,17 +15,28 @@ btnClear.addEventListener("click", () => clearGrid());
 //start new grid
 btnNew.addEventListener("click", () => enterSize());
 
+//change colors
+btnBW.addEventListener("click", () => {
+    clearGrid();
+    const div = document.querySelectorAll("#grid");
+    div.forEach(element => {moveMouse(element, "black")});
+});
 
+btnColor.addEventListener("click",() => {
+    clearGrid();
+    const div = document.querySelectorAll("#grid");
+    div.forEach(element => {
+        let randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        moveMouse(element, randomColor)});
+        
+});
 
 function setBoardSize() {
     let windowHeight = window.innerHeight;
     let windowWidth = window.innerWidth;
-    console.log(windowHeight);
-    console.log(windowWidth);
     if (windowHeight < windowWidth) {
         boardSize = windowHeight - 200;
     } else boardSize = windowWidth - 200;
-    console.log(boardSize);
     board.style.height = `${boardSize}px`;
     board.style.width = `${boardSize}px`;
 }
@@ -49,8 +61,9 @@ function drawGrid (n) {
             const div = document.createElement("div");
             div.style.height = `${gridSize}px`;
             div.style.width = `${gridSize}px`;
-            div.onmouseover = function() {div.style.backgroundColor = "black";};
-            div.onmouseout = function() {div.style.backgroundColor = "black";};
+            moveMouse(div, "black");
+            //div.onmouseover = function() {div.style.backgroundColor ="black";};
+            //div.onmouseout = function() {div.style.backgroundColor = "black";};
             div.classList.add("grid");
             div.id = "grid";
             board.appendChild(div);
@@ -59,14 +72,20 @@ function drawGrid (n) {
 
 function clearGrid() {
     const div = document.querySelectorAll("#grid");
-    div.forEach(element => {element.style.backgroundColor = "white";})
+    div.forEach(element => {
+        element.style.backgroundColor = "white";
+        moveMouse(element, "black");
+    });
 }    
 
-function mouseOver() {
-    div.style.backgroundColor = "black";
+function moveMouse(element, color) {
+    element.onmouseover = function() {element.style.backgroundColor = color;};
+    element.onmouseout = function() {element.style.backgroundColor = color;};
 }
 
-function mouseOut() {
-    div.style.backgroundColor = "black";
+function makeColor() {
+    return color = "red";
 }
+
+
 

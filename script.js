@@ -7,36 +7,30 @@ const btnColor = document.querySelector("#color");
 
 let boardSize;
 
-//draw the initial grid
-window.onload = setBoardSize();
-window.onload = drawGrid(n);
-//clear the grid
+setBoardSize();
+drawGrid(n);
+
 btnClear.addEventListener("click", () => clearGrid());
-//start new grid
+
 btnNew.addEventListener("click", () => enterSize());
 
-//change colors
 btnBW.addEventListener("click", () => {
     clearGrid();
-    const div = document.querySelectorAll("#grid");
-    div.forEach(element => {moveMouse(element, "black")});
+    board.addEventListener("mousemove", (e) => {e.target.style.backgroundColor = "black"});
 });
 
 btnColor.addEventListener("click",() => {
     clearGrid();
-    const div = document.querySelectorAll("#grid");
-    div.forEach(element => {
-        let randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-        moveMouse(element, randomColor)});
-        
+    board.addEventListener("mousemove", (e) => {e.target.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);}
+    );
 });
 
 function setBoardSize() {
     let windowHeight = window.innerHeight;
     let windowWidth = window.innerWidth;
     if (windowHeight < windowWidth) {
-        boardSize = windowHeight - 200;
-    } else boardSize = windowWidth - 200;
+        boardSize = windowHeight;
+    } else boardSize = windowWidth;
     board.style.height = `${boardSize}px`;
     board.style.width = `${boardSize}px`;
 }
@@ -48,44 +42,26 @@ function enterSize() {
     ) { 
         clearGrid();
     } else {
-        n = Number(newSize);
         while (board.hasChildNodes()) {
             board.removeChild(board.firstChild);}
-        drawGrid(n);
+        drawGrid(newSize);
     }
 }
 
 function drawGrid (n) {
     let gridSize = boardSize/n - 2;
     for (let i = 0; i < n*n; i++) {
-            const div = document.createElement("div");
-            div.style.height = `${gridSize}px`;
-            div.style.width = `${gridSize}px`;
-            moveMouse(div, "black");
-            //div.onmouseover = function() {div.style.backgroundColor ="black";};
-            //div.onmouseout = function() {div.style.backgroundColor = "black";};
-            div.classList.add("grid");
-            div.id = "grid";
-            board.appendChild(div);
-        }
+            const divNew = document.createElement("div");
+            divNew.style.height = divNew.style.width = `${gridSize}px`;
+            divNew.classList.add("grid");
+            divNew.id = "grid";
+            board.appendChild(divNew);
+        };
+        board.addEventListener("mousemove", (e) => {e.target.style.backgroundColor = "black"});
     }
 
 function clearGrid() {
     const div = document.querySelectorAll("#grid");
-    div.forEach(element => {
-        element.style.backgroundColor = "white";
-        moveMouse(element, "black");
-    });
-}    
-
-function moveMouse(element, color) {
-    element.onmouseover = function() {element.style.backgroundColor = color;};
-    element.onmouseout = function() {element.style.backgroundColor = color;};
+    div.forEach(e => {e.style.backgroundColor = "white"});
 }
-
-function makeColor() {
-    return color = "red";
-}
-
-
 

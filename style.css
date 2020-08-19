@@ -1,67 +1,86 @@
 html, body {
     height: 100%;
     margin: 0;
-}
-
-body{ 
     color: black;
     font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-   
 }
-.container {
-    flex: 1 0 auto;
-    min-width: 100%;;
-
-}
-.nav {
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr 50px;
+    grid-template-areas: 
+    "container right"
+    "container btns"
+    "container footer";
+} 
+.right{
+    grid-area: right;
     background-color: #ede7e3;
-    line-height: 50px;
-    padding: 0 20px;
-    
+    text-align: center;
 }
+.right>h1 {
+    font-size: 50px;
+    font-family: 'Permanent Marker', cursive;
+}
+.btns {
+    grid-area: btns;
+    background-color: #ede7e3;
+    text-align: center;
 
-#name {
-    float: right;
-    font-size: 16px;
-}
-.board {
-    
-    display: flex;
-    flex-wrap: wrap;
-    margin: 50px;
-    
 }
 .footer {
+    grid-area: footer;
     background-color: #ede7e3;
-    line-height: 50px;
-    padding-left: 20px;
-    flex-shrink: 0;
-    min-width: 100%;
+    text-align: center;
 }
-
+.board {
+    grid-area: container;
+    display: flex;
+    flex-wrap: wrap;
+}
 .grid {
     background-color: white;
-    border: 1px solid grey;
-    
+    border: 1px solid #ecebeb;
 }
-
 button {
+    display: block;
+    font-size: 20px;
     background-color: #ffa62b;
     border-radius: 10px;
-    padding: 10px 30px 10px 30px;
+    padding: 15px 50px;
     border: none;
     outline: none;
     cursor: pointer;
-    
+    margin: 15px auto;
 }
-
 button:hover {
     transform: scale(1.05);
 }
-
-
 a, a:visited {
     color: black;
+}
+
+
+@media only screen and (max-width: 760px) {
+    body {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 40px 40px 1fr auto;
+        grid-template-areas: 
+        "right "
+        "btns"
+        "container "
+        " footer ";
+    }
+    
+    button {
+        display: inline;
+        font-size: 16px;
+        padding: 5px 15px;
+        margin: 5px;
+    }
+    .right>h1 {
+        font-size: 24px;
+        display: inline;
+    }
 }
